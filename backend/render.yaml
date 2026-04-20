@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: anemi-backend
+    env: python
+    pythonVersion: 3.10.4
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py

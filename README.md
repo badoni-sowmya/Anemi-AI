@@ -194,9 +194,9 @@ POST /predict
 
 ## Authors
 
-**Vishal S**
-Register Number: 212223110063
-Department: BE Computer Science and Engineering (IoT)
+**Sowmya Badoni**
+Register Number: 212223230211
+Department: B TECH AIDS
 Saveetha Engineering College
 
 ---

@@ -9,8 +9,6 @@
 </pre>
 </div>
 
-# AnemiAI
-
 > **Non-invasive anaemia screening and haemoglobin prediction using computer vision and deep learning.**
 
 AnemiAI eliminates the need for blood draws in preliminary anaemia screening by analyzing RGB color features extracted from lower eyelid images — making clinical-grade screening accessible in low-resource environments where laboratory infrastructure is unavailable.
@@ -133,14 +131,6 @@ Data was normalized using StandardScaler and MinMaxScaler before training. The d
 - **Lighting sensitive:** Prediction accuracy degrades under inconsistent or low lighting conditions
 - **Not a diagnostic tool:** This system is intended for preliminary screening only and is **not a replacement for laboratory blood tests**
 - **Pending clinical validation:** The model has not yet been validated in a formal clinical trial setting
-
----
-
-## Project Info
-
-**Author:** Sowmya Badoni (Reg. No. 212223230211)  
-**Program:** B.Tech – Artificial Intelligence & Data Science  
-**Institution:** Saveetha Engineering College
 
 ---
 

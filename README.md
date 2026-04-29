@@ -34,14 +34,6 @@ Over 1.6 billion people globally are affected by anaemia. Diagnosis traditionall
 
 ## Architecture
 <img width="2400" height="960" alt="anemia ai" src="https://github.com/user-attachments/assets/db2b8ae6-acfb-4625-95e3-58d453e898c1" />
-
-
-**Model Inputs:** Red %, Green %, Blue % pixel intensities from eyelid ROI  
-**Model Outputs:** Binary anaemia classification + continuous Hb regression  
-**Loss Functions:** Binary Crossentropy (classification) · MSE (regression)  
-**Optimizer:** Adam  
-**Preprocessing:** StandardScaler + MinMaxScaler (serialized with the model)
-
 ---
 
 ## Tech Stack

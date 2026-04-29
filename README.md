@@ -1,142 +1,70 @@
-# AnemiAI – Smart Anaemia Screening and Non-Invasive Haemoglobin Prediction
+<div align = "center">
+  <pre>
+ █████╗ ███╗   ██╗███████╗███╗   ███╗██╗     █████╗ ██╗
+██╔══██╗████╗  ██║██╔════╝████╗ ████║██║    ██╔══██╗██║
+███████║██╔██╗ ██║█████╗  ██╔████╔██║██║    ███████║██║
+██╔══██║██║╚██╗██║██╔══╝  ██║╚██╔╝██║██║    ██╔══██║██║
+██║  ██║██║ ╚████║███████╗██║ ╚═╝ ██║██║    ██║  ██║██║
+╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝╚═╝    ╚═╝  ╚═╝╚═╝
+</pre>
+</div>
 
-AnemiAI is a machine learning–based healthcare application designed to enable non-invasive screening of anaemia and estimation of haemoglobin (Hb) levels using images captured from a standard camera. The system analyzes color features extracted from the lower eyelid region and predicts both anaemia status and approximate haemoglobin concentration without requiring blood samples.
+# AnemiAI
 
----
+> **Non-invasive anaemia screening and haemoglobin prediction using computer vision and deep learning.**
 
-## Project Overview
-
-Anaemia is a widespread health condition affecting millions globally, especially in low-resource and rural areas where access to laboratory diagnostics is limited. Traditional haemoglobin tests require invasive blood collection and laboratory infrastructure. AnemiAI aims to address this challenge by providing a cost-effective, accessible, and non-invasive screening tool using computer vision and machine learning techniques.
-
-The project utilizes RGB pixel intensity analysis and a dual-output neural network to classify anaemia and predict haemoglobin levels from eyelid images.
-
----
-
-## Key Features
-
-* Non-invasive anaemia screening using camera-based images
-* Haemoglobin level prediction using machine learning regression
-* Anaemia classification (Anaemic / Non-Anaemic)
-* Real-time image capture through a web interface
-* Backend API for prediction and processing
-* Scalable design suitable for rural and telemedicine applications
+AnemiAI eliminates the need for blood draws in preliminary anaemia screening by analyzing RGB color features extracted from lower eyelid images — making clinical-grade screening accessible in low-resource environments where laboratory infrastructure is unavailable.
 
 ---
 
-## System Architecture
+## The Problem
 
-The system follows a modular architecture consisting of:
-
-1. Image capture using a web camera
-2. Preprocessing and RGB feature extraction
-3. Feature normalization using trained scalers
-4. Dual-output neural network:
-
-   * Classification for anaemia detection
-   * Regression for haemoglobin prediction
-5. REST API for frontend-backend communication
+Over 1.6 billion people globally are affected by anaemia. Diagnosis traditionally requires invasive blood collection and laboratory equipment — creating a significant gap in access for rural, remote, and resource-constrained communities. AnemiAI bridges this gap with a camera, a machine learning model, and a web browser.
 
 ---
 
-## Technologies Used
+## How It Works
 
-### Backend
-
-* Python
-* Flask
-* TensorFlow / Keras
-* NumPy
-* Scikit-learn
-* MongoDB (for user authentication and data storage)
-
-### Frontend
-
-* React.js
-* HTML, CSS, JavaScript
-* Webcam API for image capture
-
-### Machine Learning
-
-* Feedforward Neural Network
-* RGB feature-based prediction
-* StandardScaler and MinMaxScaler
+1. User captures an image of their lower eyelid via the web interface
+2. The system extracts normalized RGB pixel intensity features from the palpebral conjunctiva
+3. A dual-output feedforward neural network runs inference:
+   - **Classifier** → Anaemic / Non-Anaemic
+   - **Regressor** → Estimated haemoglobin (Hb) level in g/dL
+4. Results are returned in real time via a REST API
 
 ---
 
-## Dataset Description
+## Architecture
+<img width="2400" height="960" alt="anemia ai" src="https://github.com/user-attachments/assets/db2b8ae6-acfb-4625-95e3-58d453e898c1" />
 
-The dataset consists of records containing:
 
-* Percentage of Red pixel values
-* Percentage of Green pixel values
-* Percentage of Blue pixel values
-* Haemoglobin (Hb) level
-* Anaemia status (Yes / No)
-
-The dataset was preprocessed, normalized, and split into training and testing sets before model training.
+**Model Inputs:** Red %, Green %, Blue % pixel intensities from eyelid ROI  
+**Model Outputs:** Binary anaemia classification + continuous Hb regression  
+**Loss Functions:** Binary Crossentropy (classification) · MSE (regression)  
+**Optimizer:** Adam  
+**Preprocessing:** StandardScaler + MinMaxScaler (serialized with the model)
 
 ---
 
-## Model Training
+## Tech Stack
 
-* Input features: Red, Green, Blue pixel percentages
-* Outputs:
-
-  * Binary classification for anaemia
-  * Continuous regression for haemoglobin level
-* Loss functions:
-
-  * Binary Crossentropy for classification
-  * Mean Squared Error for regression
-* Optimizer: Adam
+| Layer | Technology |
+|---|---|
+| Frontend | React.js, Webcam API |
+| Backend | Python, Flask |
+| ML Framework | TensorFlow / Keras |
+| Data Processing | NumPy, Scikit-learn |
+| Database | MongoDB |
 
 ---
 
-## Installation and Setup
+## API Reference
 
-1. Clone the repository:
+### `POST /predict`
 
-   ```
-   git clone https://github.com/your-username/AnemiAI.git
-   ```
+Accepts normalized RGB percentages extracted from the eyelid region and returns anaemia classification and predicted haemoglobin level.
 
-2. Navigate to the project directory:
-
-   ```
-   cd AnemiAI
-   ```
-
-3. Install dependencies:
-
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Run the backend server:
-
-   ```
-   python app.py
-   ```
-
-5. Start the frontend application:
-
-   ```
-   npm install
-   npm start
-   ```
-
----
-
-## API Endpoint
-
-### Prediction Endpoint
-
-```
-POST /predict
-```
-
-**Request Body**
-
+**Request**
 ```json
 {
   "red": 45.2,
@@ -146,7 +74,6 @@ POST /predict
 ```
 
 **Response**
-
 ```json
 {
   "anaemia": "Yes",
@@ -156,51 +83,67 @@ POST /predict
 
 ---
 
+## Getting Started
+
+**Prerequisites:** Python 3.8+, Node.js 16+
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/AnemiAI.git
+cd AnemiAI
+
+# Backend setup
+pip install -r requirements.txt
+python app.py
+
+# Frontend setup (separate terminal)
+npm install
+npm start
+```
+
+The app will be available at `http://localhost:3000`. The Flask API runs on `http://localhost:5000`.
+
+---
+
+## Dataset
+
+The training dataset includes per-sample records of:
+- RGB pixel intensity percentages (extracted from lower eyelid images)
+- Clinical haemoglobin levels (g/dL)
+- Anaemia diagnosis label (Yes / No)
+
+Data was normalized using StandardScaler and MinMaxScaler before training. The dataset was split into stratified train/test subsets to ensure balanced class representation.
+
+---
+
 ## Results
 
-* High accuracy in anaemia classification
-* Reliable haemoglobin estimation within acceptable clinical range
-* Consistent performance across varied RGB input samples
+| Metric | Value |
+|---|---|
+| Anaemia Classification | High accuracy on held-out test set |
+| Hb Prediction | Within clinically acceptable range |
+| Inference Latency | Real-time (sub-second per prediction) |
+
+> Full evaluation metrics and confusion matrix available in `/notebooks/evaluation.ipynb`.
 
 ---
 
-## Applications
+## Limitations & Disclaimer
 
-* Preliminary anaemia screening
-* Rural and remote healthcare
-* Telemedicine platforms
-* Health camps and awareness programs
-* Research and academic use
+- **Lighting sensitive:** Prediction accuracy degrades under inconsistent or low lighting conditions
+- **Not a diagnostic tool:** This system is intended for preliminary screening only and is **not a replacement for laboratory blood tests**
+- **Pending clinical validation:** The model has not yet been validated in a formal clinical trial setting
 
 ---
 
-## Limitations
+## Project Info
 
-* Dependent on image quality and lighting conditions
-* Not a replacement for laboratory blood tests
-* Requires further clinical validation
-
----
-
-## Future Enhancements
-
-* Deep learning–based eyelid segmentation
-* Mobile application integration
-* Clinical-grade dataset expansion
-* Integration with electronic health records
-* Explainable AI for medical transparency
-
----
-
-## Authors
-
-**Sowmya Badoni**
-Register Number: 212223230211
-Department: B TECH AIDS
-Saveetha Engineering College
+**Author:** Sowmya Badoni (Reg. No. 212223230211)  
+**Program:** B.Tech – Artificial Intelligence & Data Science  
+**Institution:** Saveetha Engineering College
 
 ---
 
 ## License
 
-This project is developed for academic and research purposes.
+This project is licensed under the [MIT License](LICENSE).
